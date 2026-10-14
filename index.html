@@ -377,8 +377,10 @@
   <h2 class="sec-title">Nhóm nội y trên nền tảng: tín hiệu phía Việt Nam đang tốt hơn mặt bằng chung</h2>
   <p class="sec-lead">Chỉ số lưu lượng gian hàng theo tháng của nhóm Underwear &amp; Sleepwear, so sánh giữa các gian hàng Việt Nam và chỉ số tổng hợp toàn cầu của cùng nhóm.</p>
 
-  <div style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 22px 10px">
-    <canvas id="trafficChart" height="120"></canvas>
+  <div style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 22px 14px">
+    <div style="font-size:13px;font-weight:700;color:var(--ink2)">Chỉ số lưu lượng gian hàng theo tháng, kỳ 10/2025 tới 09/2026</div>
+    <div style="font-size:11.5px;color:var(--muted);margin:4px 0 12px">Trục dọc: chỉ số lưu lượng gian hàng của nhóm ngành. Đây là chỉ số tương đối đã chuẩn hoá, không phải số lượt truy cập. Trục ngang: tháng ghi nhận.</div>
+    <canvas id="trafficChart" height="118"></canvas>
   </div>
 
   <div class="grid g3" style="margin-top:20px">
@@ -410,10 +412,23 @@
         },
         options:{
           responsive:true, maintainAspectRatio:true,
-          plugins:{legend:{position:'bottom', labels:{boxWidth:12, font:{size:12}}}},
+          plugins:{
+            legend:{position:'bottom', labels:{boxWidth:12, boxHeight:12, padding:14, font:{size:12}, color:'#39312E'}},
+            tooltip:{callbacks:{label:function(c){ return c.dataset.label + ': ' + c.parsed.y.toLocaleString('vi-VN') + ' (chỉ số)'; }}}
+          },
           scales:{
-            y:{beginAtZero:true, grid:{color:'#F1ECE8'}, ticks:{color:'#8C837E'}},
-            x:{grid:{display:false}, ticks:{color:'#8C837E'}}
+            y:{
+              beginAtZero:true,
+              title:{display:true, text:['Chỉ số lưu lượng gian hàng','(chỉ số tương đối, đã chuẩn hoá)'],
+                     color:'#6E6560', font:{size:12, weight:'600'}, padding:{bottom:10}},
+              grid:{color:'#F1ECE8'},
+              ticks:{color:'#8C837E', font:{size:11.5}, callback:function(v){ return Number(v).toLocaleString('vi-VN'); }}
+            },
+            x:{
+              grid:{display:false},
+              title:{display:true, text:'Tháng ghi nhận', color:'#6E6560', font:{size:12, weight:'600'}, padding:{top:8}},
+              ticks:{color:'#8C837E', font:{size:11.5}}
+            }
           }
         }
       });
